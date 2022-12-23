@@ -1,2 +1,2 @@
 # cron-creator
-a web service that reates cron jobs in crontab of ubuntu linux
+a web service that creates cron jobs in crontab of ubuntu linux
