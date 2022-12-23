@@ -1,0 +1,75 @@
+{
+    "00": {
+        "response": {
+            "code": "00",
+            "message": "Se ejecuto el servicio web con éxito"
+        }
+    },
+    "01": {
+        "response": {
+            "code": "01",
+            "message": "Hubo un error al crear el archivo SH con el servicio web"
+        }
+    },
+    "11": {
+        "response": {
+            "code": "11",
+            "message": "Hubo un error al dar permisos de ejecucion al archivo SH con el servicio web"
+        }
+    },
+    "12": {
+        "response": {
+            "code": "12",
+            "message": "Hubo un stderror al dar permisos de ejecucion al archivo SH con el servicio web"
+        }
+    },
+    "13": {
+        "response": {
+            "code": "13",
+            "message": "Hubo un error al ejecutar el archivo SH con el servicio web"
+        }
+    },
+    "14": {
+        "response": {
+            "code": "14",
+            "message": "Hubo un stderror al ejecutar el archivo SH con el servicio web"
+        }
+    },
+    "15": {
+        "response": {
+            "code": "15",
+            "message": "Hubo un error al borrar el archivo SH con el servicio web"
+        }
+    },
+    "16": {
+        "response": {
+            "code": "16",
+            "message": "Hubo un stderror al borrar el archivo SH con el servicio web"
+        }
+    },
+    "17": {
+        "response": {
+            "code": "17",
+            "message": "Hubo un error al abrir el crontab con el servicio web"
+        }
+    },
+    "18": {
+        "response": {
+            "code": "18",
+            "message": "Hubo un error al abrir el crontab con el servicio web"
+        }
+    },
+    "20": {
+        "response": {
+            "code": "20",
+            "message": "Hubo un error en el servicio web"
+        }
+    },
+    "21": {
+        "response": {
+            "code": "21",
+            "message": "Hubo un error en la petición al servicio web. 'Body request' no correcto."
+        }
+    }
+    
+}
