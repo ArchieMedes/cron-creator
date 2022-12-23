@@ -59,6 +59,12 @@
             "message": "Hubo un error al abrir el crontab con el servicio web"
         }
     },
+    "19": {
+        "response": {
+            "code": "19",
+            "message": "Hubo un error al hacer echo en el crontab con el servicio web"
+        }
+    },
     "20": {
         "response": {
             "code": "20",
@@ -70,6 +76,5 @@
             "code": "21",
             "message": "Hubo un error en la petición al servicio web. 'Body request' no correcto."
         }
-    }
-    
+    }   
 }
