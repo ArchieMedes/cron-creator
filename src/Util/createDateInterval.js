@@ -6,7 +6,7 @@ const createDateInterval = async (number, unitOfTime) => {
 
     let starterDay;
     let fechaInicio;
-    let fechaFin = currentDay.toString() + "-" + currentMonth.toString() + "-" + currentYear.toString();
+    // let fechaFin = currentDay.toString() + "-" + currentMonth.toString() + "-" + currentYear.toString();
 
     let monthsWith31 = [1, 3, 5, 7, 8, 10, 12];
     let monthsWith30 = [4, 6, 9, 11];
@@ -16,7 +16,6 @@ const createDateInterval = async (number, unitOfTime) => {
     console.log('typeOf (currentMonth):', typeof(currentMonth));
     console.log('typeOf (currentYear):', typeof(currentYear));
     console.log(`HOY ESTAMOS A ${currentDay} de ${currentMonth} del año ${currentYear}\n`);
-    console.log('fechaFin:',fechaFin);
 
     switch(unitOfTime){
 
@@ -76,7 +75,7 @@ const createDateInterval = async (number, unitOfTime) => {
 
     return {
         fechaInicio: fechaInicio.toString(),
-        fechaFin: fechaFin
+        fechaFin: fechaInicio.toString()
     }
 
 }
