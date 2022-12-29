@@ -13,23 +13,17 @@ const createDateInterval = require('./createDateInterval').createDateInterval;
 
 const createCronJob = async (bodyRequest) => {
 
-    let { sampleName, idSample, executionTime, recurrence, filters, selectedDay, selectedMonth } = bodyRequest;
-    let successReq = false;
+    let { idSample, executionTime, recurrence, selectedDay, selectedMonth } = bodyRequest;
+    
+    if( executionTime === 'Invalid Date' ){
+        return errorCatalog["21"];
+    }
+    
 
     let executionStartHour = executionTime[0] + executionTime[1];
     let executionStartMinute = executionTime[3] + executionTime[4];
 
     // CRON JOB CREATION:
-    if( filters.period.number && filters.period.unitOfTime ){
-        // we get the STARTING and FINISHING DATE
-        let { fechaInicio, fechaFin } = await createDateInterval( filters.period.number, filters.period.unitOfTime );
-        bodyRequest.filters.period = {
-            "FECHA_INICIO": fechaInicio,
-            "FECHA_FIN": fechaFin
-        }
-        // console.log('bodyRequest after createDateInterval:', bodyRequest);
-    }
-
     // we stringify the bodyReq object
     bodyRequest = JSON.stringify(bodyRequest);
     const regEx = /"/g;
@@ -85,12 +79,10 @@ const createCronJob = async (bodyRequest) => {
         // we execute the sh file that writes on crontab
         const { stdout, stderr, error } = await exec(`bash /home/laureate/cron-creater/shFiles/${idSample}.sh`);
         if(error){
-            successReq = false;
             console.log(`error: ${error}`);
             return errorCatalog["13"];
         }
         if(stderr){
-            successReq = false;
             console.log(`stderr: ${stderr}`);
             return errorCatalog["14"];
         }
@@ -105,12 +97,10 @@ const createCronJob = async (bodyRequest) => {
         // we erase the sh file that writes on crontab
         const { stdout, stderr, error } = await exec(`rm /home/laureate/cron-creater/shFiles/${idSample}.sh`);
         if(error){
-            successReq = false;
             console.log(`error: ${error}`);
             return errorCatalog["15"];
         }
         if(stderr){
-            successReq = false;
             console.log(`stderr: ${stderr}`);
             return errorCatalog["16"];
         }

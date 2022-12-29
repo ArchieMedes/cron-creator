@@ -24,7 +24,6 @@ const deleteCronJob = async (bodyRequest) => {
         } else {
             newCrontabFile += element + '\n';
         }
-        
     }
 
     console.log('newCrontabFile:', newCrontabFile);
@@ -37,24 +36,6 @@ const deleteCronJob = async (bodyRequest) => {
         console.log(`error: ${err}`);
         return errorCatalog["19"];
     }
-
-
-    /* try {
-        // we give to the sh file recently created, execution permissions
-        const { stdout, stderr, error } = await exec(`echo ${newCrontabFile} > /var/spool/cron/crontabs/root`);
-        if(error){
-            console.log(`error: ${error}`);
-            return errorCatalog["19"];
-        }
-        if(stderr){
-            console.log(`stderr: ${stderr}`);
-            return errorCatalog["19"];
-        }
-        console.log(`stdout at echo to the crontab file :\n${stdout}`);
-    } catch( e ) {
-        console.log('error:', e);
-        return errorCatalog["20"];
-    } */
 
     return errorCatalog["00"];
 
