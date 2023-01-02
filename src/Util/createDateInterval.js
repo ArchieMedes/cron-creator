@@ -24,6 +24,12 @@ const createDateInterval = async (number, unitOfTime) => {
             starterDay = currentDay - number;
             if( starterDay <= 0 ){
                 currentMonth = currentMonth - 1;
+                
+                if( currentMonth <= 0 ){
+                    starterMonth = 12 - starterMonth;
+                    currentYear = currentYear--;
+                }
+
                 if( monthsWith31.indexOf(currentMonth) ){
                     // Jan, March, May, Jul, Aug, Oct, Dec
                     starterDay = 31 + starterDay;
@@ -44,6 +50,12 @@ const createDateInterval = async (number, unitOfTime) => {
             starterDay = currentDay - (number * 7);
             if( starterDay <= 0 ){
                 currentMonth = currentMonth - 1;
+                
+                if( currentMonth <= 0 ){
+                    starterMonth = 12 - starterMonth;
+                    currentYear = currentYear--;
+                }
+
                 if( monthsWith31.indexOf(currentMonth) ){
                     // Jan, March, May, Jul, Aug, Oct, Dec
                     starterDay = 31 + starterDay;
@@ -62,6 +74,10 @@ const createDateInterval = async (number, unitOfTime) => {
         case 'month':
 
             let starterMonth = currentMonth - number;
+            if( starterMonth <= 0 ){
+                starterMonth = 12 - starterMonth;
+                currentYear = currentYear--;
+            }
             fechaInicio = currentDay.toString() + "-" + starterMonth.toString() + "-" + currentYear.toString();
             break;
         
