@@ -14,22 +14,23 @@ const deleteCronJob = async (bodyRequest) => {
 
     // console.log('crontabFile:', crontabFile);
     let crontabFileSplitted = crontabFile.split('\n');
+    let indexToErase = -1;
 
     console.log('crontabFileSplitted:', crontabFileSplitted);
-    let newCrontabFile = '';
     for (let index = 0; index < crontabFileSplitted.length; index++) {
         const element = crontabFileSplitted[index];
-        if( element === `# ${idSample}` ){
-            index++;
-        } else {
-            newCrontabFile += element + '\n';
+        if( element.includes(`# ${idSample}`) ){
+            indexToErase = index;
+            break;
         }
     }
 
-    console.log('newCrontabFile:', newCrontabFile);
+    // remove the line with the id sample and the nex line where the cron job exists
+    crontabFileSplitted.splice(indexToErase, 2); 
+    const crontabFileUpdated = crontabFileSplitted.join('\n');
 
     try {
-        fs.writeFileSync('/var/spool/cron/crontabs/root', newCrontabFile);
+        fs.writeFileSync('/var/spool/cron/crontabs/root', crontabFileUpdated);
         console.log(`file written successfully`);
         // file written successfully
     } catch (err) {
