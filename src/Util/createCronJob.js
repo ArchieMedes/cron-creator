@@ -37,20 +37,20 @@ const createCronJob = async (bodyRequest) => {
     // we create the schedule:
     let { dom, moy, dow } = await createSchedule( recurrence, selectedDay, selectedMonth );
 
-    let fileContent1 = "#!/bin/bash\necho '# " + idSample + "' >> /var/spool/cron/crontabs/root\n";
-    let fileContent2 = "echo \"" + executionStartMinute + " " + executionStartHour + " " + dom + " " + moy + " " + dow + " curl ";
-    let fileContent3 = "-H 'Content-Type: application/json' ";
-    let fileContent4 = "-H 'Authorization: " + authorizationHeader + "' ";
-    let fileContent5 = "-X POST ";
-    let fileContent6 = '--data-raw \'' + bodyRequest + '\' ';
-    let fileContent7 = url + "\" >> /var/spool/cron/crontabs/root\n";
-    let fileContent8 = "exit";
-    let fileContent = fileContent1 + fileContent2 + fileContent3 + fileContent4 + fileContent5 + fileContent6 + fileContent7 + fileContent8;
+    let fileContent = "#!/bin/bash\necho '# " + idSample + "' >> /var/spool/cron/crontabs/root\n";
+    let fileContent1 = executionStartMinute + " " + executionStartHour + " " + dom + " " + moy + " " + dow + " curl ";
+    let fileContent2 = "-H \'Content-Type: application/json\' ";
+    let fileContent3 = "-H \'Authorization: " + authorizationHeader + "\' ";
+    let fileContent4 = "-X POST ";
+    let fileContent5 = "--data-raw \'" + bodyRequest + "\' ";
+    let fileContent6 = url;
+    let fileContentConcat = fileContent1 + fileContent2 + fileContent3 + fileContent4 + fileContent5 + fileContent6;
+    let fileContentFinal = 'crontab -l | { cat; echo "' + fileContentConcat + '"; } | crontab -';
     
     // we create the sampleId.sh file:
     try{
-        fs.appendFileSync(`/home/laureate/cron-creater/shFiles/${idSample}.sh`, fileContent);
-        console.log(`\narchivo ${idSample}.sh creado con exito\n`);
+        fs.appendFileSync(`/home/laureate/cron-creater-dev/shFiles/${idSample}.sh`, fileContent + fileContentFinal);
+        console.log(`\narchivo ${idSample}.sh CREADO con exito\n`);
     } catch( err ){
         console.log('error at appending file synchroniously:', err);
         return errorCatalog["01"];
@@ -60,7 +60,7 @@ const createCronJob = async (bodyRequest) => {
     // we make the shell commands:
     try {
         // we give to the sh file recently created, execution permissions
-        const { stdout, stderr, error } = await exec(`chmod +x /home/laureate/cron-creater/shFiles/${idSample}.sh`);
+        const { stdout, stderr, error } = await exec(`chmod +x /home/laureate/cron-creater-dev/shFiles/${idSample}.sh`);
         if(error){
             console.log(`error: ${error}`);
             return errorCatalog["11"];
@@ -77,7 +77,7 @@ const createCronJob = async (bodyRequest) => {
 
     try {
         // we execute the sh file that writes on crontab
-        const { stdout, stderr, error } = await exec(`bash /home/laureate/cron-creater/shFiles/${idSample}.sh`);
+        const { stdout, stderr, error } = await exec(`bash /home/laureate/cron-creater-dev/shFiles/${idSample}.sh`);
         if(error){
             console.log(`error: ${error}`);
             return errorCatalog["13"];
@@ -95,7 +95,7 @@ const createCronJob = async (bodyRequest) => {
     
     try {
         // we erase the sh file that writes on crontab
-        const { stdout, stderr, error } = await exec(`rm /home/laureate/cron-creater/shFiles/${idSample}.sh`);
+        const { stdout, stderr, error } = await exec(`rm /home/laureate/cron-creater-dev/shFiles/${idSample}.sh`);
         if(error){
             console.log(`error: ${error}`);
             return errorCatalog["15"];
