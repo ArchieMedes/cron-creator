@@ -8,9 +8,9 @@ const https = require("https");
 
 // settings (testing and dev):
 // app.set( 'port', process.env.PORT || process.env.port || 3002 );
+app.set( 'port', process.env.PORT || process.env.port || 80 );
 // settings for PROD:
-// app.set( 'port', process.env.PORT || process.env.port || 80 );
-app.set( 'port', process.env.PORT || process.env.port || 443 );
+// app.set( 'port', process.env.PORT || process.env.port || 443 );
 app.set('json spaces', 2);
 
 // middlewares
@@ -27,8 +27,9 @@ app.use(function(req, res, next) {
 // ROUTES
 app.use('/api/cronCreator', require("./routes/cronCreator"));
 
+// for PROD:
 // serve the API with signed certificate on 443 (SSL/HTTPS) port
-const httpsServer = https.createServer({
+/* const httpsServer = https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/live/intevolution-vmubuntu20.southcentralus.cloudapp.azure.com/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/intevolution-vmubuntu20.southcentralus.cloudapp.azure.com/fullchain.pem'),
 }, app);
@@ -36,11 +37,10 @@ const httpsServer = https.createServer({
 
 httpsServer.listen(443, () => {
     console.log('HTTPS Server running on port 443');
-});
+}); */
 
 
-/*
+// for developing
 app.listen( app.get('port'), () => {
     console.log(`Ejemplo de una aplicación escuchando en el puerto ${app.get('port')}\n`);
 });
-*/
