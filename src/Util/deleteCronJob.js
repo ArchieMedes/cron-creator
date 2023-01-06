@@ -32,6 +32,23 @@ const deleteCronJob = async (bodyRequest) => {
     try {
         fs.writeFileSync('/var/spool/cron/crontabs/root', crontabFileUpdated);
         console.log(`file written successfully`);
+        try {
+            // we execute the sh file that writes on crontab
+            const { stdout, stderr, error } = await exec(`crontab -l | { cat; } | crontab -`);
+            if(error){
+                console.log(`error: ${error}`);
+                return errorCatalog["13"];
+            }
+            if(stderr){
+                console.log(`stderr: ${stderr}`);
+                return errorCatalog["14"];
+            }
+            console.log(`stdout at executing "crontab -l | { cat; } | crontab -" :\n${stdout}`);
+        } catch( e ) {
+            console.error('error:', e); 
+            return errorCatalog["13"];
+            
+        }
         // file written successfully
     } catch (err) {
         console.log(`error: ${err}`);
